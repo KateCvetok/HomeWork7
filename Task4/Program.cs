@@ -1,63 +1,49 @@
-﻿// Показать позиции  элемента в двумерном массиве, и возвращать значение этого элемента или же указать,  что такого элемента нет.
-
-
-Console.WriteLine("Введите номер строки: ");
-int row = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("Введите номер столбца: ");
-int column = Convert.ToInt32(Console.ReadLine());
-
-int[,] CreateMatrixRndInt(int rows, int columns, int min, int max)
+﻿// В двумерном массиве показать позиции числа, заданного пользователем или указать, что такого элемента нет.
+void FillArray(int[,] matr)
 {
-    int[,] matrix = new int[rows, columns];
-    Random rnd = new Random();
-
-
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        {
-            matrix[i, j] = rnd.Next(min, max + 1);
-
-        }
-
-    }
-
-    return matrix;
+    for (int i = 0; i < matr.GetLength(0); i++)
+        for (int j = 0; j < matr.GetLength(1); j++)
+            matr[i, j] = new Random().Next(0, 10);
 }
 
-void ElementsMatrix(int[,] array2D)
+void PrintArray(int[,] matr, int m, int n)
 {
-    for (int i = 0; i < array2D.GetLength(0); i++)
+    for (int i = 0; i < matr.GetLength(0); i++)
     {
-        for (int j = 0; j < array2D.GetLength(1); j++)
-
+        for (int j = 0; j < matr.GetLength(1); j++)
         {
-            if (row >= 0 && row < array2D.GetLength(0) && column >= 0 && column < array2D.GetLength(1))
-            {
-                Console.WriteLine(array2D[row, column]);
-              
-            }
-            else Console.WriteLine ("Такого элемента не существует");
+            Console.Write($"{matr[i, j]} ");
         }
+        Console.WriteLine();
     }
 }
-
-void PrintMatrix(int[,] matrix)
+void FindIndex(int[,] matr, int number)
 {
+    for (int i = 0; i < matr.GetLength(0); i++)
+        for (int j = 0; j < matr.GetLength(1); j++)
+            if (matr[i, j] == number) Console.Write($"Данное число находится на позиции: {i}; {j}; ");
+}
+bool FindNumber(int[,] matr, int number)
+{
+    for (int i = 0; i < matr.GetLength(0); i++)
 
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        Console.Write("[");
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        {
-            if (j < matrix.GetLength(1) - 1) Console.Write($"{matrix[i, j],4}, ");
-            else Console.Write($"{matrix[i, j],4}");
-        }
-        Console.WriteLine("]");
-    }
+        for (int j = 0; j < matr.GetLength(1); j++)
+
+            if (matr[i, j] == number) return true;
+    return false;
 }
 
-int[,] array2D = CreateMatrixRndInt(3, 4, 1, 5);
-PrintMatrix(array2D);
 
-ElementsMatrix(array2D);
+Console.WriteLine("Количество строк: ");
+int m = int.Parse(Console.ReadLine() ?? "0");
+Console.WriteLine("Количество столбцов: ");
+int n = int.Parse(Console.ReadLine() ?? "0");
+
+int[,] matrix = new int[n, m];
+Console.WriteLine("Массив: ");
+FillArray(matrix);
+PrintArray(matrix, m, n);
+Console.WriteLine("Введите число");
+int num = int.Parse(Console.ReadLine() ?? "0");
+if (FindNumber(matrix, num)) FindIndex(matrix, num);
+else Console.WriteLine("Такого элемента нет");
