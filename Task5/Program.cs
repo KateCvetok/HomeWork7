@@ -19,18 +19,17 @@ int[,] CreateMatrixRndInt(int rows, int columns, int min, int max)
     return matrix;
 }
 
+
 int SumElements(int[,] matrix)
 {
-int sum = default;
-for (int i = 0; i < matrix.GetLength(0); i++)
-{
-for (int j = 0; j < matrix.GetLength(1); j++)
-{
-if (i == j) sum += matrix[i, j];
-}
-}
-return sum;
-}
+    int sum = 0;
+    for (int i = 0; i < matrix.GetLength(0); i++)
+    
+        sum += matrix[i,i];
+        
+        return sum;
+    }
+    
 
 void PrintMatrix(int[,] matrix)
 {
